@@ -3,6 +3,11 @@ var debug = undefined;
 class Article {
     constructor() {
         this.lang = undefined;
+        this.id = undefined;
+        this.title = undefined;
+        this.redirect = false;
+        this.disambiguation = false;
+        this.text = undefined;
     }
 
     set_title(title) {
@@ -29,8 +34,16 @@ class Article {
     }
 
     parse_data(data) {
-        data = JSON.parse(data)
+        data = JSON.parse(data);
         debug = data;
         console.log(data);
+
+        this.id = Object.keys(data["query"]["pages"])[0];
+        var page = data["query"]["pages"][this.id]
+        this.title = page["title"];
+        this.redirect = data['query']['redirects'] !== undefined;
+        this.disambiguation = page["pageprops"] !== undefined &&
+                              page["pageprops"]["disambiguation"] !== undefined;
+        this.text = undefined;
     }
 }
