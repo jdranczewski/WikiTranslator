@@ -192,6 +192,29 @@ function translate() {
     og.setTitle(document.getElementById("og-title").value);
 }
 
+function hashChanged() {
+    var hash_data = new URL(window.location.href.replace("#", "?"));
+    var title = hash_data.searchParams.get("title");
+    var from = hash_data.searchParams.get("from");
+    var to = hash_data.searchParams.get("to")
+    if (from == null || from == "null") {
+        from = "pl";
+        window.location.hash = "from=" + from + "&to=" + to + "&title=" + title;
+        return;
+    };
+    og.lang = from;
+    console.log(to)
+    if (to == null || to == "null") {
+        to = "en";
+        window.location.hash = "from=" + from + "&to=" + to + "&title=" + title;
+        return;
+    };
+    tr.lang = to;
+    document.querySelector("#og-title").value = title;
+    translate();
+}
+window.onhashchange = hashChanged;
+
 og = new Article();
 og.lang = "en";
 og.onTextReady = update_og;
@@ -200,4 +223,10 @@ tr = new Article();
 tr.lang = "pl";
 tr.onTextReady = update_tr;
 
-document.getElementById("og-submit").onclick = translate;
+hashChanged();
+
+document.getElementById("og-submit").onclick = function() {
+    window.location.hash = "from=" + og.lang +
+                           "&to=" + tr.lang +
+                           "&title=" + document.querySelector("#og-title").value;
+};
