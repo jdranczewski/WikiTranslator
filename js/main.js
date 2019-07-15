@@ -57,6 +57,34 @@ class Article {
         this.disambiguation = page["pageprops"] !== undefined &&
                               page["pageprops"]["disambiguation"] !== undefined;
         this.text = undefined;
-        if (this.onPropsReady !== undefined) this.onPropsReady();
+        if (this.onPropsReady !== undefined) this.onPropsReady(this);
+
+        // Get html if page is disambiguation, otherwise a summary
+        if (this.disambiguation) {
+            this.getHtml();
+        } else {
+            // this.getSummary();
+        }
+    }
+
+    getHtml() {
+        console.log("getting HTML");
+        var xhr = new XMLHttpRequest();
+        var url = "https://";
+        url += this.lang;
+        url += ".wikipedia.org/api/rest_v1/page/html/";
+        url += this.title;
+        url += "?redirect=true";
+        xhr.open("GET", url, true);
+        // 'this' changes meaning inside a function()
+        var this_class = this;
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                document.body.innerHTML = this.responseText;
+            }
+        }
+        xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
+        xhr.send();
     }
 }
