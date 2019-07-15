@@ -1,6 +1,7 @@
 var debug = undefined;
 var user_agent = "Example/1.0";
 
+// Container of all data for a particular article
 class Article {
     constructor() {
         this.lang = undefined;
