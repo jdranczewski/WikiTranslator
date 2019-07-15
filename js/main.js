@@ -35,6 +35,7 @@ class Article {
         xhr.send();
     }
 
+    // Sets the object parameters provided through the metadata API request
     parseMetadata(data) {
         // Debug
         data = JSON.parse(data);
@@ -53,15 +54,9 @@ class Article {
         this.langlinks = data["language_links"];
         this.text = undefined;
         if (this.onPropsReady !== undefined) this.onPropsReady(this);
-
-        // Get a summary. If article is a disambiguation, get full text
-        if (this.disambiguation) {
-            this.getHtml();
-        } else {
-            // this.getSummary();
-        }
     }
 
+    // Gets the summary text for the article
     getText() {
         var xhr = new XMLHttpRequest();
         var url = "https://";
@@ -80,6 +75,8 @@ class Article {
         xhr.send();
     }
 
+    // Parses the summary text. If article is a disambiguation, requests
+    // full text, stripped of images etc.
     parseText(data) {
         // Debug
         data = JSON.parse(data);
@@ -93,5 +90,34 @@ class Article {
         } else {
             this.text = data["extract_html"]
         }
+    }
+
+    // Gets full article text
+    getFullText() {
+        var xhr = new XMLHttpRequest();
+        var url = "https://";
+        url += this.lang;
+        url += ".wikipedia.org/w/api.php?";
+        url += "origin=*&";
+        url += "action=parse&";
+        url += "format=json&";
+        url += "prop=text&";
+        url += "redirects=1&";
+        url += "disableeditsection=1&";
+        url += "mobileformat=1&";
+        url += "noimages=1&";
+        url += "page=" + this.title;
+        xhr.open("GET", url, true);
+        // 'this' changes meaning inside a function()
+        var this_class = this;
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                console.log(data);
+                this_class.text = data["parse"]["text"]["*"];
+            }
+        }
+        xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
+        xhr.send();
     }
 }
