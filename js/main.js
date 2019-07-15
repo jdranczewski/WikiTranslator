@@ -187,6 +187,11 @@ function reset() {
     tr_el.querySelector(".link").href = "";
 }
 
+function translate() {
+    reset();
+    og.setTitle(document.getElementById("og-title").value);
+}
+
 og = new Article();
 og.lang = "en";
 og.onTextReady = update_og;
@@ -195,7 +200,4 @@ tr = new Article();
 tr.lang = "pl";
 tr.onTextReady = update_tr;
 
-document.getElementById("og-submit").onclick = function() {
-    reset();
-    og.setTitle(document.getElementById("og-title").value);
-}
+document.getElementById("og-submit").onclick = translate;
