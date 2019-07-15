@@ -216,6 +216,12 @@ function hashChanged() {
 }
 window.onhashchange = hashChanged;
 
+function invert() {
+    window.location.hash = "from=" + tr.lang +
+                           "&to=" + og.lang +
+                           "&title=" + document.querySelector("#tr-title").innerText;
+}
+
 og = new Article();
 og.lang = "en";
 og.onTextReady = update_og;
@@ -231,3 +237,4 @@ document.getElementById("og-submit").onclick = function() {
                            "&to=" + tr.lang +
                            "&title=" + document.querySelector("#og-title").value;
 };
+document.querySelector("#invert").onclick = invert;
