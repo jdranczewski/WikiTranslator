@@ -89,7 +89,8 @@ class Article {
             this.hatnotes.unshift("This is a disambiguation page.")
             this.getFullText();
         } else {
-            this.text = data["extract_html"]
+            this.text = data["extract_html"];
+            if (this.onTextReady !== undefined) this.onTextReady(this);
         }
     }
 
@@ -116,9 +117,46 @@ class Article {
                 var data = JSON.parse(this.responseText);
                 console.log(data);
                 this_class.text = data["parse"]["text"]["*"];
+                if (this_class.onTextReady !== undefined) this_class.onTextReady(this_class);
             }
         }
         xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
         xhr.send();
     }
+
+    findTranslation(a) {
+        var tr_title = undefined;
+        for (var i=0; i<a.langlinks.length; i++) {
+            if (a.langlinks[i].lang == this.lang) {
+                this.setTitle(a.langlinks[i]["titles"]["canonical"]);
+                break;
+            }
+        }
+    }
+}
+
+var og_el = document.querySelector('#og')
+function update_og(a) {
+    og_el.querySelector(".title").value = a.title;
+    og_el.querySelector(".hatnotes").innerHTML = "";
+    og_el.querySelector(".text").innerHTML = a.text;
+    tr.findTranslation(og);
+}
+
+var tr_el = document.querySelector('#tr')
+function update_tr(a) {
+    tr_el.querySelector(".title").innerHTML = a.title;
+    tr_el.querySelector(".hatnotes").innerHTML = "";
+    tr_el.querySelector(".text").innerHTML = a.text;
+}
+
+og = new Article();
+og.lang = "en";
+og.onTextReady = update_og;
+tr = new Article();
+tr.lang = "pl";
+tr.onTextReady = update_tr;
+
+document.getElementById("og-submit").onclick = function() {
+    og.setTitle(document.getElementById("og-title").value);
 }
