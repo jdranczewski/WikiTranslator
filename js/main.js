@@ -1,9 +1,9 @@
 var debug = undefined;
+var user_agent = "Example/1.0";
 
 class Article {
     constructor() {
         this.lang = undefined;
-        this.id = undefined;
         this.title = undefined;
         this.section = undefined;
         this.hatnotes = undefined;
@@ -14,7 +14,7 @@ class Article {
     }
 
     // Used to change the article data stored in the object
-    set_title(title) {
+    setTitle(title) {
         this.title = title;
         this.section = title.split("#")[1];
         var xhr = new XMLHttpRequest();
@@ -27,14 +27,15 @@ class Article {
         var this_class = this;
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                this_class.parse_data(this.responseText);
+                this_class.parseMetadata(this.responseText);
+                this_class.getText();
             }
         }
-        xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
+        xhr.setRequestHeader("Api-User-Agent", user_agent);
         xhr.send();
     }
 
-    parse_data(data) {
+    parseMetadata(data) {
         // Debug
         data = JSON.parse(data);
         debug = data;
@@ -61,24 +62,36 @@ class Article {
         }
     }
 
-    getHtml() {
-        console.log("getting HTML");
+    getText() {
         var xhr = new XMLHttpRequest();
         var url = "https://";
         url += this.lang;
-        url += ".wikipedia.org/api/rest_v1/page/html/";
+        url += ".wikipedia.org/api/rest_v1/page/summary/";
         url += this.title;
-        url += "?redirect=true";
         xhr.open("GET", url, true);
         // 'this' changes meaning inside a function()
         var this_class = this;
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                document.body.innerHTML = this.responseText;
+                this_class.parseText(this.responseText);
             }
         }
-        xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
+        xhr.setRequestHeader("Api-User-Agent", user_agent);
         xhr.send();
+    }
+
+    parseText(data) {
+        // Debug
+        data = JSON.parse(data);
+        debug = data;
+        console.log(data);
+
+        this.title = data["displaytitle"];
+        if (data["type"] == "disambiguation") {
+            this.hatnotes.unshift("This is a disambiguation page.")
+            this.getFullText();
+        } else {
+            this.text = data["extract_html"]
+        }
     }
 }
