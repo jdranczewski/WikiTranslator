@@ -5,6 +5,7 @@ class Article {
         this.lang = undefined;
         this.id = undefined;
         this.title = undefined;
+        this.section = undefined;
         this.hatnotes = undefined;
         this.langlinks = undefined;
         this.text = undefined;
@@ -15,6 +16,7 @@ class Article {
     // Used to change the article data stored in the object
     set_title(title) {
         this.title = title;
+        this.section = title.split("#")[1];
         var xhr = new XMLHttpRequest();
         var url = "https://";
         url += this.lang;
@@ -42,7 +44,6 @@ class Article {
         this.hatnotes = []
         if (data["hatnotes"] !== undefined) {
             for (var i=0; i<data["hatnotes"].length; i++) {
-                console.log(data["hatnotes"][i])
                 if (data["hatnotes"][i]["section"] == 0) {
                     this.hatnotes.push(data["hatnotes"][i]["html"]);
                 }
