@@ -5,9 +5,8 @@ class Article {
         this.lang = undefined;
         this.id = undefined;
         this.title = undefined;
-        this.redirect = false;
-        this.redirectFrom = undefined;
-        this.disambiguation = false;
+        this.hatnotes = undefined;
+        this.langlinks = undefined;
         this.text = undefined;
         this.onPropsReady = undefined;
         this.onTextReady = undefined;
@@ -15,17 +14,12 @@ class Article {
 
     // Used to change the article data stored in the object
     set_title(title) {
+        this.title = title;
         var xhr = new XMLHttpRequest();
         var url = "https://";
         url += this.lang;
-        url += ".wikipedia.org/w/api.php?";
-        url += "origin=*&";
-        url += "action=query&";
-        url += "format=json&";
-        url += "prop=langlinks|pageprops&";
-        url += "redirects&";
-        url += "ppprop=disambiguation&";
-        url += "titles=" + title;
+        url += ".wikipedia.org/api/rest_v1/page/metadata/";
+        url += title;
         xhr.open("GET", url, true);
         // 'this' changes meaning inside a function()
         var this_class = this;
@@ -45,21 +39,20 @@ class Article {
         console.log(data);
 
         // Set article details and fire callback once done
-        this.id = Object.keys(data["query"]["pages"])[0];
-        var page = data["query"]["pages"][this.id];
-        this.title = page["title"];
-        this.redirect = data['query']['redirects'] !== undefined;
-        if (this.redirect) {
-            this.redirectFrom = data['query']['redirects'][0]["from"];
-        } else {
-            this.redirectFrom = undefined;
-        }
-        this.disambiguation = page["pageprops"] !== undefined &&
-                              page["pageprops"]["disambiguation"] !== undefined;
+        this.hatnotes = []
+        if (data["hatnotes"] !== undefined) {
+            for (var i=0; i<data["hatnotes"].length; i++) {
+                console.log(data["hatnotes"][i])
+                if (data["hatnotes"][i]["section"] == 0) {
+                    this.hatnotes.push(data["hatnotes"][i]["html"]);
+                }
+            }
+        };
+        this.langlinks = data["language_links"];
         this.text = undefined;
         if (this.onPropsReady !== undefined) this.onPropsReady(this);
 
-        // Get html if page is disambiguation, otherwise a summary
+        // Get a summary. If article is a disambiguation, get full text
         if (this.disambiguation) {
             this.getHtml();
         } else {
