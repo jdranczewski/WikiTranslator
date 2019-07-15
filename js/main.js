@@ -86,7 +86,7 @@ class Article {
         debug = data;
         console.log(data);
 
-        this.title = data["displaytitle"];
+        this.title = data["title"];
         if (data["type"] == "disambiguation") {
             this.hatnotes.unshift("This is a disambiguation page. Click one of the links to go to the desired word.")
             this.getFullText();
@@ -159,6 +159,12 @@ function update_og(a) {
         og_el.querySelector(".hatnotes").appendChild(hn);
     }
     og_el.querySelector(".text").innerHTML = a.text;
+    og_el.querySelectorAll(".hatnotes a, .text a").forEach(function(link) {
+        var href = link.href.split("/");
+        href = href[href.length-1];
+        link.href = "#from=" + og.lang + "&to=" + tr.lang +
+                    "&title=" + href;
+    });
     og_el.querySelector(".link").href = a.url;
     tr.findTranslation(og);
 }
@@ -174,6 +180,12 @@ function update_tr(a) {
         tr_el.querySelector(".hatnotes").appendChild(hn);
     }
     tr_el.querySelector(".text").innerHTML = a.text;
+    tr_el.querySelectorAll(".hatnotes a, .text a").forEach(function(link) {
+        var href = link.href.split("/");
+        href = href[href.length-1];
+        link.href = "#from=" + tr.lang + "&to=" + og.lang +
+                    "&title=" + href;
+    });
     tr_el.querySelector(".link").href = a.url;
 }
 
@@ -197,20 +209,9 @@ function hashChanged() {
     var title = hash_data.searchParams.get("title");
     var from = hash_data.searchParams.get("from");
     var to = hash_data.searchParams.get("to")
-    if (from == null || from == "null") {
-        from = "pl";
-        window.location.hash = "from=" + from + "&to=" + to + "&title=" + title;
-        return;
-    };
-    og.lang = from;
-    console.log(to)
-    if (to == null || to == "null") {
-        to = "en";
-        window.location.hash = "from=" + from + "&to=" + to + "&title=" + title;
-        return;
-    };
-    tr.lang = to;
-    document.querySelector("#og-title").value = title;
+    if (from != null) og.lang = from;
+    if (to != null) tr.lang = to;
+    if (title != null) document.querySelector("#og-title").value = title;
     translate();
 }
 window.onhashchange = hashChanged;
