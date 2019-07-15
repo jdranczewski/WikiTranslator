@@ -7,9 +7,10 @@ class Article {
         this.lang = undefined;
         this.title = undefined;
         this.section = undefined;
-        this.hatnotes = undefined;
+        this.hatnotes = [];
         this.langlinks = undefined;
         this.text = undefined;
+        this.url = undefined;
         this.onPropsReady = undefined;
         this.onTextReady = undefined;
     }
@@ -18,6 +19,7 @@ class Article {
     setTitle(title) {
         this.title = title;
         this.section = title.split("#")[1];
+        this.url = "https://" + this.lang + ".wikipedia.org/wiki/" + title
         var xhr = new XMLHttpRequest();
         var url = "https://";
         url += this.lang;
@@ -126,11 +128,22 @@ class Article {
 
     findTranslation(a) {
         var tr_title = undefined;
+        var found = false;
         for (var i=0; i<a.langlinks.length; i++) {
             if (a.langlinks[i].lang == this.lang) {
                 this.setTitle(a.langlinks[i]["titles"]["canonical"]);
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            this.title = "No translation";
+            this.section = undefined;
+            this.hatnotes = [];
+            this.langlinks = undefined;
+            this.text = "";
+            this.url = undefined;
+            if (this.onTextReady !== undefined) this.onTextReady(this);
         }
     }
 }
@@ -140,6 +153,7 @@ function update_og(a) {
     og_el.querySelector(".title").value = a.title;
     og_el.querySelector(".hatnotes").innerHTML = "";
     og_el.querySelector(".text").innerHTML = a.text;
+    og_el.querySelector(".link").href = a.url;
     tr.findTranslation(og);
 }
 
@@ -148,15 +162,28 @@ function update_tr(a) {
     tr_el.querySelector(".title").innerHTML = a.title;
     tr_el.querySelector(".hatnotes").innerHTML = "";
     tr_el.querySelector(".text").innerHTML = a.text;
+    tr_el.querySelector(".link").href = a.url;
+}
+
+function reset() {
+    og_el.querySelector(".hatnotes").innerHTML = "";
+    og_el.querySelector(".text").innerHTML = "";
+    og_el.querySelector(".link").href = "";
+    tr_el.querySelector(".title").innerHTML = "";
+    tr_el.querySelector(".hatnotes").innerHTML = "";
+    tr_el.querySelector(".text").innerHTML = "";
+    tr_el.querySelector(".link").href = "";
 }
 
 og = new Article();
 og.lang = "en";
 og.onTextReady = update_og;
+
 tr = new Article();
 tr.lang = "pl";
 tr.onTextReady = update_tr;
 
 document.getElementById("og-submit").onclick = function() {
+    reset();
     og.setTitle(document.getElementById("og-title").value);
 }
