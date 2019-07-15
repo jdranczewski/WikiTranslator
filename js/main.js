@@ -88,7 +88,7 @@ class Article {
 
         this.title = data["displaytitle"];
         if (data["type"] == "disambiguation") {
-            this.hatnotes.unshift("This is a disambiguation page.")
+            this.hatnotes.unshift("This is a disambiguation page. Click one of the links to go to the desired word.")
             this.getFullText();
         } else {
             this.text = data["extract_html"];
@@ -152,6 +152,12 @@ var og_el = document.querySelector('#og')
 function update_og(a) {
     og_el.querySelector(".title").value = a.title;
     og_el.querySelector(".hatnotes").innerHTML = "";
+    for (var i=0; i<a.hatnotes.length; i++) {
+        hn = document.createElement("div");
+        hn.innerHTML = a.hatnotes[i];
+        hn.className = "hatnote"
+        og_el.querySelector(".hatnotes").appendChild(hn);
+    }
     og_el.querySelector(".text").innerHTML = a.text;
     og_el.querySelector(".link").href = a.url;
     tr.findTranslation(og);
@@ -161,6 +167,12 @@ var tr_el = document.querySelector('#tr')
 function update_tr(a) {
     tr_el.querySelector(".title").innerHTML = a.title;
     tr_el.querySelector(".hatnotes").innerHTML = "";
+    for (var i=0; i<a.hatnotes.length; i++) {
+        hn = document.createElement("div");
+        hn.innerHTML = a.hatnotes[i];
+        hn.className = "hatnote"
+        tr_el.querySelector(".hatnotes").appendChild(hn);
+    }
     tr_el.querySelector(".text").innerHTML = a.text;
     tr_el.querySelector(".link").href = a.url;
 }
