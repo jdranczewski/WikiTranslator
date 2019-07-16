@@ -9,11 +9,11 @@ class Article {
     constructor() {
         this.lang = undefined;
         this.langId = undefined;
-        this.title = undefined;
+        this.title = "";
         this.section = undefined;
         this.hatnotes = [];
         this.langlinks = undefined;
-        this.text = undefined;
+        this.text = "";
         this.url = undefined;
         this.onLangReady = undefined;
         this.onTextReady = undefined;
@@ -27,13 +27,14 @@ class Article {
             this.lang = lang;
             this.langId = all_langs_short.indexOf(lang);
         }
-        this.title = undefined;
+        this.title = "";
         this.section = undefined;
         this.hatnotes = [];
         this.langlinks = undefined;
         this.text = "";
         this.url = undefined;
         if (this.onLangReady !== undefined) this.onLangReady(this);
+        if (this.onTextReady !== undefined) this.onTextReady(this);
     }
 
     // Used to change the article data stored in the object
@@ -153,23 +154,33 @@ class Article {
     // Given another Article object, check if it contains a link to a page in
     // this article's language, and if so, request and ingest it
     findTranslation(a) {
-        var tr_title = undefined;
-        var found = false;
-        for (var i=0; i<a.langlinks.length; i++) {
-            if (a.langlinks[i].lang == this.lang) {
-                this.setTitle(a.langlinks[i]["titles"]["canonical"]);
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            this.title = "No translation";
+        if (a.title == "") {
+            this.title = "";
             this.section = undefined;
             this.hatnotes = [];
             this.langlinks = undefined;
             this.text = "";
             this.url = undefined;
             if (this.onTextReady !== undefined) this.onTextReady(this);
+        } else {
+            var tr_title = undefined;
+            var found = false;
+            for (var i=0; i<a.langlinks.length; i++) {
+                if (a.langlinks[i].lang == this.lang) {
+                    this.setTitle(a.langlinks[i]["titles"]["canonical"]);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                this.title = "No translation";
+                this.section = undefined;
+                this.hatnotes = [];
+                this.langlinks = undefined;
+                this.text = "";
+                this.url = undefined;
+                if (this.onTextReady !== undefined) this.onTextReady(this);
+            }
         }
     }
 }
