@@ -8,14 +8,27 @@ for (var i=0; i<all_langs.length; i++) all_langs_short.push(all_langs[i][0]);
 class Article {
     constructor() {
         this.lang = undefined;
+        this.langId = undefined;
         this.title = undefined;
         this.section = undefined;
         this.hatnotes = [];
         this.langlinks = undefined;
         this.text = undefined;
         this.url = undefined;
-        this.onPropsReady = undefined;
+        this.onLangReady = undefined;
         this.onTextReady = undefined;
+    }
+
+    setLang(lang) {
+        if (all_langs[lang] !== undefined) {
+            this.langId = lang;
+            this.lang = all_langs[lang][0];
+        } else {
+            this.lang = lang;
+            this.langId = all_langs_short.indexOf(lang);
+        }
+        this.title = undefined;
+        if (this.onLangReady !== undefined) this.onLangReady(this);
     }
 
     // Used to change the article data stored in the object
@@ -63,7 +76,6 @@ class Article {
         };
         this.langlinks = data["language_links"];
         this.text = undefined;
-        if (this.onPropsReady !== undefined) this.onPropsReady(this);
     }
 
     // Gets the summary text for the article
@@ -179,6 +191,12 @@ function update_og(a) {
     tr.findTranslation(og);
 }
 
+function update_og_lang(a) {
+    var lang = all_langs[a.langId];
+    og_el.querySelector(".lang-name").innerText = lang[1] + " (" + lang[2] + ")";
+    og_el.querySelector(".lang-number").innerText = lang[3];
+}
+
 // Update the displayed data based on parameters of the translated article
 var tr_el = document.querySelector('#tr')
 function update_tr(a) {
@@ -198,6 +216,12 @@ function update_tr(a) {
                     "&title=" + href;
     });
     tr_el.querySelector(".link").href = a.url;
+}
+
+function update_tr_lang(a) {
+    var lang = all_langs[a.langId];
+    tr_el.querySelector(".lang-name").innerText = lang[1] + " (" + lang[2] + ")";
+    tr_el.querySelector(".lang-number").innerText = lang[3];
 }
 
 // Reset the displayed data
@@ -223,8 +247,8 @@ function hashChanged() {
     var title = hash_data.searchParams.get("title");
     var from = hash_data.searchParams.get("from");
     var to = hash_data.searchParams.get("to")
-    if (from != null) og.lang = from;
-    if (to != null) tr.lang = to;
+    if (from != null) og.setLang(from);
+    if (to != null) tr.setLang(to);
     if (title != null) {
         document.querySelector("#og-title").value = title;
         translate();
@@ -241,11 +265,13 @@ function invert() {
 
 // Create two Article objects
 og = new Article();
-og.lang = "en";
+og.onLangReady = update_og_lang;
+og.setLang("en");
 og.onTextReady = update_og;
 
 tr = new Article();
-tr.lang = "pl";
+tr.onLangReady = update_tr_lang;
+tr.setLang("pl");
 tr.onTextReady = update_tr;
 
 // Check if there's valid data in the hash on page load
@@ -266,4 +292,4 @@ var selector_html = ""
 for (var i=0; i<all_langs.length; i++) {
     selector_html += "<option value=\"" + i + "\">" + all_langs[i][1] + " (" + all_langs[i][2] + ")</option>"
 }
-document.querySelector("#lang-selector").innerHTML = selector_html;
+document.querySelector("#lang-selector-dropdown").innerHTML = selector_html;

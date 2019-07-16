@@ -10,18 +10,31 @@
     </head>
     <body>
         <button id="invert">Invert</button>
-        <div id="og">
-            <select id="lang-selector">
+        <div id="lang-selector-container">
+            <h2>Recently used languages</h2>
+            <h2>Most popular languages</h2>
+            <h2>All available languages</h2>
+            <select id="lang-selector-dropdown">
                 <option value="">Loading...</option>
             </select>
+        </div>
+        <div id="og">
             <input id="og-title" class="title"></input>
             <button id="og-submit">Submit</button>
+            <div id="og-lang">
+                <div id="og-lang-name" class="lang-name"></div>
+                <div id="og-lang-number" class="lang-number"></div>
+            </div>
             <div id="og-hatnotes" class="hatnotes"></div>
             <div id="og-text" class="text"></div>
             <a id="og-link" class="link" target="_blank">Read full article</a>
         </div>
         <div id="tr">
             <div id="tr-title" class="title"></div>
+            <div id="tr-lang">
+                <div id="tr-lang-name" class="lang-name"></div>
+                <div id="tr-lang-number" class="lang-number"></div>
+            </div>
             <div id="tr-hatnotes" class="hatnotes"></div>
             <div id="tr-text" class="text"></div>
             <a id="tr-link" class="link" target="_blank">Read full article</a>
