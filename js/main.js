@@ -216,8 +216,10 @@ function hashChanged() {
     var to = hash_data.searchParams.get("to")
     if (from != null) og.lang = from;
     if (to != null) tr.lang = to;
-    if (title != null) document.querySelector("#og-title").value = title;
-    translate();
+    if (title != null) {
+        document.querySelector("#og-title").value = title;
+        translate();
+    }
 }
 window.onhashchange = hashChanged;
 
