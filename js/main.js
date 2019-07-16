@@ -17,6 +17,10 @@ class Article {
 
     // Used to change the article data stored in the object
     setTitle(title) {
+        if (this.title == title) {
+            if (this.onTextReady !== undefined) this.onTextReady(this);
+            return;
+        }
         this.title = title;
         this.section = title.split("#")[1];
         this.url = "https://" + this.lang + ".wikipedia.org/wiki/" + title
