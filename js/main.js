@@ -28,6 +28,11 @@ class Article {
             this.langId = all_langs_short.indexOf(lang);
         }
         this.title = undefined;
+        this.section = undefined;
+        this.hatnotes = [];
+        this.langlinks = undefined;
+        this.text = "";
+        this.url = undefined;
         if (this.onLangReady !== undefined) this.onLangReady(this);
     }
 
