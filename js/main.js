@@ -343,11 +343,6 @@ var lang_current = og;
 hashChanged();
 
 // Probably a placeholder for submiting for translation
-document.getElementById("og-submit").onclick = function() {
-    window.location.hash = "from=" + og.lang +
-                           "&to=" + tr.lang +
-                           "&title=" + document.querySelector("#og-title").value;
-};
 document.querySelector("#invert").onclick = invert;
 
 // Handle language selection:
@@ -399,7 +394,23 @@ document.querySelector("#lang-selector-dropdown").onchange = function() {
 // Handle search
 function update_search(s) {
     console.log("updating")
-    document.querySelector("#search-results").innerHTML = s.results.join(", ");
+    var cont = document.querySelector("#search-results");
+    cont.innerHTML = "";
+    for (var i=0; i<s.results.length; i++) {
+        var sr = document.createElement("div");
+        sr.className = "search-result";
+        sr.innerHTML = s.results[i];
+        sr.onclick = search_click;
+        cont.appendChild(sr);
+    }
+}
+
+function search_click(e) {
+    var title = e.target.innerHTML;
+    document.querySelector("#og-title").value = title;
+    window.location.hash = "from=" + og.lang +
+                           "&to=" + tr.lang +
+                           "&title=" + document.querySelector("#og-title").value;
 }
 
 search = new Search();
