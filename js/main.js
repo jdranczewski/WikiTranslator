@@ -309,6 +309,15 @@ for (var i=0; i<all_langs.length; i++) {
 }
 document.querySelector("#lang-selector-dropdown").innerHTML = selector_html;
 
+// Populate the language buttons
+var pop_buttons_html = "";
+var pop = [45, 52, 38,224,46, 76, 138, 297, 293, 139];
+for (var i=0; i<pop.length; i++) {
+    var lang = all_langs[pop[i]];
+    pop_buttons_html += "<div class=\"lang-button\" id=\"lb-"+pop[i]+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+"</div></div>";
+}
+document.querySelector("#popular-lang-buttons").innerHTML = pop_buttons_html;
+
 // Update the lang_current variable based on what's been clicked
 document.querySelector("#og-lang").onclick = function() {
     lang_current = og;
@@ -319,6 +328,16 @@ document.querySelector("#tr-lang").onclick = function() {
 }
 
 // Handle language changes
+document.querySelectorAll(".lang-button").forEach(function(lb) {
+    lb.onclick = function() {
+        lang = this.id.split("-")[1]
+        lang_current.setLang(lang);
+        window.location.hash = "from=" + og.lang +
+                               "&to=" + tr.lang +
+                               "&title=" + document.querySelector("#og-title").value;
+    }
+});
+
 document.querySelector("#lang-selector-dropdown").onchange = function() {
     lang_current.setLang(this.value);
     window.location.hash = "from=" + og.lang +
