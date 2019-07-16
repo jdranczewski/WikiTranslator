@@ -131,6 +131,8 @@ class Article {
         xhr.send();
     }
 
+    // Given another Article object, check if it contains a link to a page in
+    // this article's language, and if so, request and ingest it
     findTranslation(a) {
         var tr_title = undefined;
         var found = false;
@@ -153,6 +155,7 @@ class Article {
     }
 }
 
+// Update the displayed data based on parameters of the original article
 var og_el = document.querySelector('#og')
 function update_og(a) {
     og_el.querySelector(".title").value = a.title;
@@ -174,6 +177,7 @@ function update_og(a) {
     tr.findTranslation(og);
 }
 
+// Update the displayed data based on parameters of the translated article
 var tr_el = document.querySelector('#tr')
 function update_tr(a) {
     tr_el.querySelector(".title").innerHTML = a.title;
@@ -194,6 +198,7 @@ function update_tr(a) {
     tr_el.querySelector(".link").href = a.url;
 }
 
+// Reset the displayed data
 function reset() {
     og_el.querySelector(".hatnotes").innerHTML = "";
     og_el.querySelector(".text").innerHTML = "";
@@ -204,11 +209,13 @@ function reset() {
     tr_el.querySelector(".link").href = "";
 }
 
+// Start a translation
 function translate() {
     reset();
     og.setTitle(document.getElementById("og-title").value);
 }
 
+// Handle a change of the url hash. This is the best way to initiate a translation
 function hashChanged() {
     var hash_data = new URL(window.location.href.replace("#", "?"));
     var title = hash_data.searchParams.get("title");
@@ -223,12 +230,14 @@ function hashChanged() {
 }
 window.onhashchange = hashChanged;
 
+// Invert the languages
 function invert() {
     window.location.hash = "from=" + tr.lang +
                            "&to=" + og.lang +
                            "&title=" + document.querySelector("#tr-title").innerText;
 }
 
+// Create two Article objects
 og = new Article();
 og.lang = "en";
 og.onTextReady = update_og;
@@ -237,8 +246,10 @@ tr = new Article();
 tr.lang = "pl";
 tr.onTextReady = update_tr;
 
+// Check if there's valid data in the hash on page load
 hashChanged();
 
+// Probably a placeholder for submiting for translation
 document.getElementById("og-submit").onclick = function() {
     window.location.hash = "from=" + og.lang +
                            "&to=" + tr.lang +
@@ -246,6 +257,9 @@ document.getElementById("og-submit").onclick = function() {
 };
 document.querySelector("#invert").onclick = invert;
 
+// Handle language selection:
+
+// First, populate the selector dropdown
 var selector_html = ""
 for (var i=0; i<all_langs.length; i++) {
     selector_html += "<option value=\"" + i + "\">" + all_langs[i][1] + " (" + all_langs[i][2] + ")</option>"
