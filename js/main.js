@@ -118,6 +118,9 @@ class Article {
         console.log(data);
 
         this.title = data["title"];
+        if (this.section !== undefined) {
+            this.hatnotes.unshift("<b>" + this.section.split("_").join(" ") + "</b> is a section of this article.")
+        }
         if (data["type"] == "disambiguation") {
             this.hatnotes.unshift("This is a disambiguation page. Click one of the links to go to the desired word.")
             this.getFullText();
@@ -257,7 +260,7 @@ function translate() {
 // Handle a change of the url hash. This is the best way to initiate a translation
 function hashChanged() {
     var hash_data = new URL(window.location.href.replace("#", "?"));
-    var title = hash_data.searchParams.get("title");
+    var title = hash_data.searchParams.get("title") + hash_data.hash;
     var from = hash_data.searchParams.get("from");
     var to = hash_data.searchParams.get("to")
     if (from != null) og.setLang(from);
@@ -327,7 +330,7 @@ document.querySelector("#tr-lang").onclick = function() {
     lang_current = tr;
 }
 
-// Handle language changes
+// Handle language changes: buttons...
 document.querySelectorAll(".lang-button").forEach(function(lb) {
     lb.onclick = function() {
         lang = this.id.split("-")[1]
@@ -338,6 +341,7 @@ document.querySelectorAll(".lang-button").forEach(function(lb) {
     }
 });
 
+// ...and the dropdown
 document.querySelector("#lang-selector-dropdown").onchange = function() {
     lang_current.setLang(this.value);
     window.location.hash = "from=" + og.lang +
