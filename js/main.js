@@ -34,6 +34,7 @@ class Article {
         this.langlinks = undefined;
         this.text = "";
         this.url = undefined;
+        console.log("language set to " + lang)
         if (this.onLangReady !== undefined) this.onLangReady(this);
         if (this.onTextReady !== undefined) this.onTextReady(this);
     }
@@ -41,6 +42,16 @@ class Article {
     // Used to change the article data stored in the object
     setTitle(title) {
         if (this.title == title) {
+            if (this.onTextReady !== undefined) this.onTextReady(this);
+            return;
+        }
+        if (title == "") {
+            this.title = "";
+            this.section = undefined;
+            this.hatnotes = [];
+            this.langlinks = undefined;
+            this.text = "";
+            this.url = undefined;
             if (this.onTextReady !== undefined) this.onTextReady(this);
             return;
         }
