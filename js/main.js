@@ -287,6 +287,8 @@ tr.onLangReady = update_tr_lang;
 tr.setLang("pl");
 tr.onTextReady = update_tr;
 
+var lang_current = og;
+
 // Check if there's valid data in the hash on page load
 hashChanged();
 
@@ -306,3 +308,20 @@ for (var i=0; i<all_langs.length; i++) {
     selector_html += "<option value=\"" + i + "\">" + all_langs[i][1] + " (" + all_langs[i][2] + ")</option>"
 }
 document.querySelector("#lang-selector-dropdown").innerHTML = selector_html;
+
+// Update the lang_current variable based on what's been clicked
+document.querySelector("#og-lang").onclick = function() {
+    lang_current = og;
+}
+
+document.querySelector("#tr-lang").onclick = function() {
+    lang_current = tr;
+}
+
+// Handle language changes
+document.querySelector("#lang-selector-dropdown").onchange = function() {
+    lang_current.setLang(this.value);
+    window.location.hash = "from=" + og.lang +
+                           "&to=" + tr.lang +
+                           "&title=" + document.querySelector("#og-title").value;
+}
