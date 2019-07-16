@@ -20,6 +20,7 @@ class Article {
     }
 
     setLang(lang) {
+        if (lang == this.lang || lang == this.langId) return;
         if (all_langs[lang] !== undefined) {
             this.langId = lang;
             this.lang = all_langs[lang][0];
