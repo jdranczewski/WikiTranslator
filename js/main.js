@@ -265,7 +265,7 @@ function hashChanged() {
     var to = hash_data.searchParams.get("to")
     if (from != null) og.setLang(from);
     if (to != null) tr.setLang(to);
-    if (title != null) {
+    if (hash_data.searchParams.get("title") != null) {
         document.querySelector("#og-title").value = title;
         translate();
     }
