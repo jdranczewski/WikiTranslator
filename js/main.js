@@ -33,7 +33,6 @@ class Article {
             this.langId = all_langs_short.indexOf(lang);
         }
         this.resetParams();
-        console.log("language set to " + lang)
         if (this.onLangReady !== undefined) this.onLangReady(this);
         if (this.onTextReady !== undefined) this.onTextReady(this);
     }
@@ -156,7 +155,7 @@ class Article {
                 if (this_class.onTextReady !== undefined) this_class.onTextReady(this_class);
             }
         }
-        xhr.setRequestHeader("Api-User-Agent", "Example/1.0");
+        xhr.setRequestHeader("Api-User-Agent", user_agent);
         xhr.send();
     }
 
@@ -182,6 +181,50 @@ class Article {
                 if (this.onTextReady !== undefined) this.onTextReady(this);
             }
         }
+    }
+}
+
+class Search {
+    constructor () {
+        this.onResultsReady = undefined;
+        this.results = [];
+    }
+
+    query(text) {
+        var xhr = new XMLHttpRequest();
+        var url = "https://";
+        url += og.lang;
+        url += ".wikipedia.org/w/api.php?";
+        url += "origin=*&";
+        url += "action=query&";
+        url += "format=json&";
+        url += "list=prefixsearch&";
+        url += "pslimit=5&";
+        url += "pssearch=" + text;
+        xhr.open("GET", url, true);
+        // 'this' changes meaning inside a function()
+        var this_class = this;
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                this_class.parseData(this.responseText);
+            }
+        }
+        xhr.setRequestHeader("Api-User-Agent", user_agent);
+        xhr.send();
+    }
+
+    parseData(data) {
+        // Debug
+        data = JSON.parse(data);
+        debug = data;
+        console.log(data);
+
+        this.results = [];
+        var results = data["query"]["prefixsearch"];
+        for (var i=0; i<results.length; i++) {
+            this.results.push(results[i]["title"]);
+        }
+        if (this.onResultsReady !== undefined) this.onResultsReady(this);
     }
 }
 
@@ -347,4 +390,17 @@ document.querySelector("#lang-selector-dropdown").onchange = function() {
     window.location.hash = "from=" + og.lang +
                            "&to=" + tr.lang +
                            "&title=" + document.querySelector("#og-title").value;
+}
+
+// Handle search
+function update_search(s) {
+    console.log("updating")
+    document.querySelector("#search-results").innerHTML = s.results.join(", ");
+}
+
+search = new Search();
+search.onResultsReady = update_search;
+document.querySelector("#og-title").oninput = function(e) {
+    console.log(e.target)
+    search.query(e.target.value);
 }
