@@ -188,10 +188,14 @@ class Search {
     constructor () {
         this.onResultsReady = undefined;
         this.results = [];
+        this.xhr = new XMLHttpRequest();
     }
 
     query(text) {
-        var xhr = new XMLHttpRequest();
+        if (this.xhr.readyState != 4) {
+            this.xhr.abort();
+        }
+        this.xhr = new XMLHttpRequest();
         var url = "https://";
         url += og.lang;
         url += ".wikipedia.org/w/api.php?";
@@ -201,16 +205,16 @@ class Search {
         url += "list=prefixsearch&";
         url += "pslimit=5&";
         url += "pssearch=" + text;
-        xhr.open("GET", url, true);
+        this.xhr.open("GET", url, true);
         // 'this' changes meaning inside a function()
         var this_class = this;
-        xhr.onreadystatechange = function() {
+        this.xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 this_class.parseData(this.responseText);
             }
         }
-        xhr.setRequestHeader("Api-User-Agent", user_agent);
-        xhr.send();
+        this.xhr.setRequestHeader("Api-User-Agent", user_agent);
+        this.xhr.send();
     }
 
     parseData(data) {
