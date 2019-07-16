@@ -9,14 +9,18 @@ class Article {
     constructor() {
         this.lang = undefined;
         this.langId = undefined;
+        this.resetParams();
+        this.onLangReady = undefined;
+        this.onTextReady = undefined;
+    }
+
+    resetParams() {
         this.title = "";
         this.section = undefined;
         this.hatnotes = [];
         this.langlinks = undefined;
         this.text = "";
         this.url = undefined;
-        this.onLangReady = undefined;
-        this.onTextReady = undefined;
     }
 
     setLang(lang) {
@@ -28,12 +32,7 @@ class Article {
             this.lang = lang;
             this.langId = all_langs_short.indexOf(lang);
         }
-        this.title = "";
-        this.section = undefined;
-        this.hatnotes = [];
-        this.langlinks = undefined;
-        this.text = "";
-        this.url = undefined;
+        this.resetParams();
         console.log("language set to " + lang)
         if (this.onLangReady !== undefined) this.onLangReady(this);
         if (this.onTextReady !== undefined) this.onTextReady(this);
@@ -46,12 +45,7 @@ class Article {
             return;
         }
         if (title == "") {
-            this.title = "";
-            this.section = undefined;
-            this.hatnotes = [];
-            this.langlinks = undefined;
-            this.text = "";
-            this.url = undefined;
+            this.resetParams();
             if (this.onTextReady !== undefined) this.onTextReady(this);
             return;
         }
@@ -167,12 +161,7 @@ class Article {
     // this article's language, and if so, request and ingest it
     findTranslation(a) {
         if (a.title == "") {
-            this.title = "";
-            this.section = undefined;
-            this.hatnotes = [];
-            this.langlinks = undefined;
-            this.text = "";
-            this.url = undefined;
+            this.resetParams();
             if (this.onTextReady !== undefined) this.onTextReady(this);
         } else {
             var tr_title = undefined;
@@ -185,12 +174,8 @@ class Article {
                 }
             }
             if (!found) {
+                this.resetParams();
                 this.title = "No translation";
-                this.section = undefined;
-                this.hatnotes = [];
-                this.langlinks = undefined;
-                this.text = "";
-                this.url = undefined;
                 if (this.onTextReady !== undefined) this.onTextReady(this);
             }
         }
