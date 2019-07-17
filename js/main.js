@@ -11,6 +11,7 @@ class Article {
         this.langId = undefined;
         this.resetParams();
         this.onLangReady = undefined;
+        this.onPropsReady = undefined;
         this.onTextReady = undefined;
     }
 
@@ -40,6 +41,7 @@ class Article {
     // Used to change the article data stored in the object
     setTitle(title) {
         if (this.title == title) {
+            if (this.onPropsReady !== undefined) this.onPropsReady(this);
             if (this.onTextReady !== undefined) this.onTextReady(this);
             return;
         }
@@ -87,6 +89,7 @@ class Article {
         };
         this.langlinks = data["language_links"];
         this.text = undefined;
+        if (this.onPropsReady !== undefined) this.onPropsReady(this);
     }
 
     // Gets the summary text for the article
@@ -233,7 +236,12 @@ class Search {
 }
 
 // Update the displayed data based on parameters of the original article
-var og_el = document.querySelector('#og')
+var og_el = document.querySelector('#og');
+function update_og_title(a) {
+    og_el.querySelector(".title").value = a.title;
+    tr.findTranslation(og);
+}
+
 function update_og(a) {
     og_el.querySelector(".title").value = a.title;
     og_el.querySelector(".hatnotes").innerHTML = "";
@@ -251,7 +259,6 @@ function update_og(a) {
                     "&title=" + href;
     });
     og_el.querySelector(".link").href = a.url;
-    tr.findTranslation(og);
 }
 
 function update_og_lang(a) {
@@ -261,7 +268,11 @@ function update_og_lang(a) {
 }
 
 // Update the displayed data based on parameters of the translated article
-var tr_el = document.querySelector('#tr')
+var tr_el = document.querySelector('#tr');
+function update_tr_title(a) {
+    tr_el.querySelector(".title").value = a.title;
+}
+
 function update_tr(a) {
     tr_el.querySelector(".title").innerHTML = a.title;
     tr_el.querySelector(".hatnotes").innerHTML = "";
@@ -329,11 +340,13 @@ function invert() {
 // Create two Article objects
 og = new Article();
 og.onLangReady = update_og_lang;
+og.onPropsReady = update_og_title;
 og.setLang("en");
 og.onTextReady = update_og;
 
 tr = new Article();
 tr.onLangReady = update_tr_lang;
+tr.onPropsReady = update_tr_title;
 tr.setLang("pl");
 tr.onTextReady = update_tr;
 
