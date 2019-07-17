@@ -55,9 +55,14 @@ a {
     border-bottom: 1px solid #c1c1c1;
 }
 
+#og-title-container {
+    display: flex;
+}
+
 #og-title {
+    flex: 1;
     font-size: 2em;
-    margin: -1px 0;
+    margin: -2px 0;
     border: none;
     border-bottom: 3px solid #99c3ff;
     transition: border 0.5s;
@@ -85,7 +90,7 @@ a {
 #og-lang {
     float: right;
     text-align: right;
-    margin-right: 25px;
+    margin: 0 25px;
 }
 
 #tr-lang {

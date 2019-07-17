@@ -26,7 +26,6 @@ class Article {
     }
 
     setLang(lang) {
-        console.log(lang)
         if (lang == this.lang || lang == this.langId) {
             if (this.onLangReady !== undefined) this.onLangReady(this);
             return;
