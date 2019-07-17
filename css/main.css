@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     color: #313131;
+    line-height: 1.15;
 }
 
 a {
@@ -21,6 +22,12 @@ a {
     box-shadow: 0 1px 3px #b8b8b8;
     background-color: #dedede;
     cursor: pointer;
+    transition: box-shadow 0.5s;
+    z-index: 4;
+}
+
+#invert:hover {
+    box-shadow: 0 2px 3px #b8b8b8;
 }
 
 #invert img {
@@ -43,6 +50,8 @@ a {
 .pane {
     flex: 1;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
 #tr {
@@ -50,12 +59,19 @@ a {
 }
 
 .title-container {
-    overflow: hidden;
+    position: relative;
     padding: 15px;
     border-bottom: 1px solid #c1c1c1;
+    z-index: 3;
 }
 
 #og-title-container {
+    display: flex;
+    background-color: white;
+}
+
+#tr-title-container {
+    background-color: whitesmoke;
     display: flex;
 }
 
@@ -75,9 +91,23 @@ a {
 }
 
 #tr-title {
-    float: right;
+    text-align: right;
     font-size: 2em;
     color: #0069ff;
+    flex: 1;
+}
+
+#search-results {
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    background-color: whitesmoke;
+    box-shadow: 0 1px 3px #b8b8b8;
+    z-index: 2;
+}
+
+.search-result {
+    padding: 5px;
 }
 
 .lang-name {
@@ -95,16 +125,18 @@ a {
 }
 
 #tr-lang {
-    float: left;
     margin-left: 25px;
 }
 
 .hatnotes {
     clear: both;
-    padding: 10px 30px;
     font-size: 0.85em;
     color: #3b3b3b;
     text-align: justify;
+}
+
+.hatnote {
+    margin: 10px 30px;
 }
 
 .text {
