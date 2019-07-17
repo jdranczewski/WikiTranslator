@@ -26,7 +26,11 @@ class Article {
     }
 
     setLang(lang) {
-        if (lang == this.lang || lang == this.langId) return;
+        console.log(lang)
+        if (lang == this.lang || lang == this.langId) {
+            if (this.onLangReady !== undefined) this.onLangReady(this);
+            return;
+        };
         if (all_langs[lang] !== undefined) {
             this.langId = lang;
             this.lang = all_langs[lang][0];
@@ -262,7 +266,6 @@ function setRecent(lang) {
     } else {
         recents = recents.split("&");
         var index  = recents.indexOf(lang);
-        console.log(index)
         if (index !== -1) {
             recents.splice(index, 1);
             recents.unshift(lang);
@@ -372,23 +375,30 @@ window.onhashchange = hashChanged;
 
 // Invert the languages
 function invert() {
-    window.location.hash = "from=" + tr.lang +
-                           "&to=" + og.lang +
+    temp = og;
+    og = tr;
+    tr = temp;
+    assignArticleBase();
+    window.location.hash = "from=" + og.lang +
+                           "&to=" + tr.lang +
                            "&title=" + document.querySelector("#tr-title").innerText;
 }
 
 // Create two Article objects
 og = new Article();
-og.name = "from";
-og.onLangReady = update_og_lang;
-og.onPropsReady = update_og_title;
-og.onTextReady = update_og;
-
 tr = new Article();
-tr.name = "to";
-tr.onLangReady = update_tr_lang;
-tr.onPropsReady = update_tr_title;
-tr.onTextReady = update_tr;
+
+function assignArticleBase() {
+    og.name = "from";
+    og.onLangReady = update_og_lang;
+    og.onPropsReady = update_og_title;
+    og.onTextReady = update_og;
+    tr.name = "to";
+    tr.onLangReady = update_tr_lang;
+    tr.onPropsReady = update_tr_title;
+    tr.onTextReady = update_tr;
+}
+assignArticleBase();
 
 var cookies = getCookies();
 if (cookies["from"] !== undefined) {
