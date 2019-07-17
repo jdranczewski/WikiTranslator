@@ -59,12 +59,19 @@ a {
     font-size: 2em;
     margin: -1px 0;
     border: none;
+    border-bottom: 3px solid #99c3ff;
+    transition: border 0.5s;
     background: none;
+}
+
+#og-title:focus {
+    border-bottom: 3px solid #0069ff;
 }
 
 #tr-title {
     float: right;
     font-size: 2em;
+    color: #0069ff;
 }
 
 .lang-name {
