@@ -7,6 +7,7 @@ for (var i=0; i<all_langs.length; i++) all_langs_short.push(all_langs[i][0]);
 // Container of all data for a particular article
 class Article {
     constructor() {
+        this.name = "";
         this.lang = undefined;
         this.langId = undefined;
         this.resetParams();
@@ -33,6 +34,8 @@ class Article {
             this.lang = lang;
             this.langId = all_langs_short.indexOf(lang);
         }
+        setCookie(this.name, this.lang);
+        setRecent(this.lang);
         this.resetParams();
         if (this.onLangReady !== undefined) this.onLangReady(this);
         if (this.onTextReady !== undefined) this.onTextReady(this);
@@ -235,6 +238,43 @@ class Search {
     }
 }
 
+// Get cookies
+function getCookies() {
+    var cookies = document.cookie.split("; ");
+    var ret = {};
+    for (var i=0; i<cookies.length; i++) {
+        var cookie = cookies[i].split("=");
+        ret[cookie[0]] = cookie[1];
+    }
+    return ret;
+}
+
+// Set cookie
+function setCookie(key, value) {
+    document.cookie = key + "=" + value + "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+}
+
+// Set recent languages
+function setRecent(lang) {
+    var recents = getCookies()["recent"];
+    if (recents === undefined) {
+        setCookie("recent", lang);
+    } else {
+        recents = recents.split("&");
+        var index  = recents.indexOf(lang);
+        console.log(index)
+        if (index !== -1) {
+            recents.splice(index, 1);
+            recents.unshift(lang);
+        } else {
+            if (recents.length >= 5) recents.pop();
+            recents.unshift(lang);
+        }
+        setCookie("recent", recents.join("&"));
+    }
+    displayRecent();
+}
+
 // Update the displayed data based on parameters of the original article
 var og_el = document.querySelector('#og');
 function update_og_title(a) {
@@ -339,16 +379,28 @@ function invert() {
 
 // Create two Article objects
 og = new Article();
+og.name = "from";
 og.onLangReady = update_og_lang;
 og.onPropsReady = update_og_title;
-og.setLang("en");
 og.onTextReady = update_og;
 
 tr = new Article();
+tr.name = "to";
 tr.onLangReady = update_tr_lang;
 tr.onPropsReady = update_tr_title;
-tr.setLang("pl");
 tr.onTextReady = update_tr;
+
+var cookies = getCookies();
+if (cookies["from"] !== undefined) {
+    og.setLang(cookies["from"]);
+} else {
+    og.setLang("en");
+}
+if (cookies["to"] !== undefined) {
+    tr.setLang(cookies["to"]);
+} else {
+    tr.setLang("pl");
+}
 
 var lang_current = og;
 
@@ -368,6 +420,17 @@ for (var i=0; i<all_langs.length; i++) {
 document.querySelector("#lang-selector-dropdown").innerHTML = selector_html;
 
 // Populate the language buttons
+function displayRecent() {
+    var recents = getCookies()["recent"].split("&");
+    var recent_buttons_html = "";
+    for (var i=0; i<recents.length; i++) {
+        var index = all_langs_short.indexOf(recents[i]);
+        var lang = all_langs[index];
+        recent_buttons_html += "<div class=\"lang-button\" id=\"lb-"+index+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+"</div></div>";
+    }
+    document.querySelector("#recent-lang-buttons").innerHTML = recent_buttons_html;
+    langButtonAssign();
+}
 var pop_buttons_html = "";
 var pop = [45, 52, 38,224,46, 76, 138, 297, 293, 139];
 for (var i=0; i<pop.length; i++) {
@@ -386,15 +449,18 @@ document.querySelector("#tr-lang").onclick = function() {
 }
 
 // Handle language changes: buttons...
-document.querySelectorAll(".lang-button").forEach(function(lb) {
-    lb.onclick = function() {
-        lang = this.id.split("-")[1]
-        lang_current.setLang(lang);
-        window.location.hash = "from=" + og.lang +
-                               "&to=" + tr.lang +
-                               "&title=" + document.querySelector("#og-title").value;
-    }
-});
+function langButtonAssign() {
+    document.querySelectorAll(".lang-button").forEach(function(lb) {
+        lb.onclick = function() {
+            lang = this.id.split("-")[1]
+            lang_current.setLang(lang);
+            window.location.hash = "from=" + og.lang +
+                                   "&to=" + tr.lang +
+                                   "&title=" + document.querySelector("#og-title").value;
+        }
+    });
+}
+langButtonAssign();
 
 // ...and the dropdown
 document.querySelector("#lang-selector-dropdown").onchange = function() {
@@ -406,7 +472,6 @@ document.querySelector("#lang-selector-dropdown").onchange = function() {
 
 // Handle search
 function update_search(s) {
-    console.log("updating")
     var cont = document.querySelector("#search-results");
     cont.innerHTML = "";
     for (var i=0; i<s.results.length; i++) {
@@ -429,6 +494,5 @@ function search_click(e) {
 search = new Search();
 search.onResultsReady = update_search;
 document.querySelector("#og-title").oninput = function(e) {
-    console.log(e.target)
     search.query(e.target.value);
 }
