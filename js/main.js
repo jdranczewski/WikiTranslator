@@ -367,8 +367,10 @@ function hashChanged() {
     if (to != null) tr.setLang(to);
     if (hash_data.searchParams.get("title") != null) {
         document.querySelector("#og-title").value = title;
-        translate();
+    } else {
+        document.querySelector("#og-title").value = "";
     }
+    translate();
 }
 window.onhashchange = hashChanged;
 
