@@ -1,0 +1,105 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #313131;
+}
+
+a {
+    color: #0069ff;
+}
+
+#invert {
+    display: block;
+    position: absolute;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    margin-left: -25px;
+    margin-top: 0.5em;
+    border-radius: 100%;
+    border: none;
+    box-shadow: 0 1px 3px #b8b8b8;
+    background-color: #dedede;
+    cursor: pointer;
+}
+
+#invert img {
+    vertical-align: middle;
+    width: 30px;
+}
+
+#lang-selector-container {
+    display: none;
+}
+
+#og-tr-container {
+    max-width: 1290px;
+    margin: 0 auto;
+    display: flex;
+    box-shadow: 0 1px 3px #b8b8b8;
+    border-radius: 5px;
+}
+
+.pane {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+#tr {
+    background-color: whitesmoke;
+}
+
+.title-container {
+    overflow: hidden;
+    padding: 15px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+#og-title {
+    font-size: 2em;
+    margin: -1px 0;
+    border: none;
+    background: none;
+}
+
+#tr-title {
+    float: right;
+    font-size: 2em;
+}
+
+.lang-name {
+    color: #4c4c4c;
+}
+
+.lang-number {
+    color: #949494;
+}
+
+#og-lang {
+    float: right;
+    text-align: right;
+    margin-right: 25px;
+}
+
+#tr-lang {
+    float: left;
+    margin-left: 25px;
+}
+
+.hatnotes {
+    clear: both;
+    padding: 10px 30px;
+    font-size: 0.85em;
+    color: #3b3b3b;
+    text-align: justify;
+}
+
+.text {
+    padding: 0 15px;
+    text-align: justify;
+}
+
+.article-link {
+    display: block;
+    margin: 15px;
+}
