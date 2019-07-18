@@ -283,7 +283,7 @@ function setRecent(lang) {
             recents.splice(index, 1);
             recents.unshift(lang);
         } else {
-            if (recents.length >= 5) recents.pop();
+            if (recents.length >= 6) recents.pop();
             recents.unshift(lang);
         }
         setCookie("recent", recents.join("&"));
@@ -578,3 +578,8 @@ search.onResultsReady = update_search;
 document.querySelector("#og-title").oninput = function(e) {
     search.query(e.target.value);
 }
+
+// Stop lang selector from appearing onload as it animates into opacity 0
+window.setTimeout(function() {
+    document.querySelector("#lang-selector-container").style.display = "block";
+}, 500);
