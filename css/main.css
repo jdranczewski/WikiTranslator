@@ -241,6 +241,8 @@ a {
 }
 
 .article-link {
-    display: block;
-    margin: 15px;
+    display: inline-block;
+    margin: 0 15px 15px 15px;
 }
+
+.article-link.disabled {display: none;}
