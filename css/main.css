@@ -48,7 +48,7 @@ a {
     transition: margin-top 0.5s, opacity 0.5s;
 }
 
-#lang-selector-container:active {
+#lang-selector-container.active {
     display: block;
     opacity: 1;
     margin-top: -5px;
@@ -178,6 +178,15 @@ a {
 
 #tr-lang {
     margin-left: 25px;
+}
+
+.lang {
+    cursor: pointer;
+}
+
+.lang.active {
+    border-bottom: 2px solid #0069ff;
+    margin-bottom: -2px !important;
 }
 
 .hatnotes {
