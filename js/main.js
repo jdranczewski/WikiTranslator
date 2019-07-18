@@ -301,6 +301,10 @@ function update_og_title(a) {
 
 function update_og(a) {
     og_el.querySelector(".title").value = a.title;
+    if (a.title !== "") {
+        document.querySelector("#gt a").href = "https://translate.google.com/#view=home&op=translate&sl="+og.lang+"&tl="+tr.lang+"&text="+a.title;
+        document.querySelector("#gt").style.display = "block";
+    }
     og_el.querySelector(".hatnotes").innerHTML = "";
     for (var i=0; i<a.hatnotes.length; i++) {
         hn = document.createElement("div");
@@ -363,6 +367,7 @@ function update_tr_lang(a) {
 
 // Reset the displayed data
 function reset() {
+    document.querySelector("#gt").style.display = "none";
     og_el.querySelector(".hatnotes").innerHTML = "";
     og_el.querySelector(".text").innerHTML = "<p>Loading...</p>";
     og_el.querySelector(".article-link").href = "";

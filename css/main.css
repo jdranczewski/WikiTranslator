@@ -45,7 +45,7 @@ a {
     margin-left: -50%;
     margin-top: -1em;
     padding: 15px;
-    box-shadow: 0 1px 6px #b8b8b8;
+    box-shadow: 0 1px 6px #007bff6e;
     z-index: 3;
     transition: margin-top 0.5s, opacity 0.5s;
 }
@@ -246,3 +246,14 @@ a {
 }
 
 .article-link.disabled {display: none;}
+
+#gt {
+    color: #6c6c6c;
+    font-size: 0.9em;
+    text-align: center;
+    margin: 5px;
+}
+
+#gt a {
+    color: #4893ff;
+}
