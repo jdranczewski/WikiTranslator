@@ -464,7 +464,7 @@ function displayRecent() {
     for (var i=0; i<recents.length; i++) {
         var index = all_langs_short.indexOf(recents[i]);
         var lang = all_langs[index];
-        recent_buttons_html += "<div class=\"lang-button\" id=\"lb-"+index+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+" articles</div></div>";
+        recent_buttons_html += "<div class=\"lang-button\" id=\"lbp-"+index+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+" articles</div></div>";
     }
     document.querySelector("#recent-lang-buttons").innerHTML = recent_buttons_html;
     langButtonAssign();
@@ -479,18 +479,28 @@ document.querySelector("#popular-lang-buttons").innerHTML = pop_buttons_html;
 
 // Update the lang_current variable based on what's been clicked
 document.querySelector("#og-lang").onclick = function(e) {
+    if (lang_current.name == "from") {
+        document.querySelector("#lang-selector-container").classList.toggle("active");
+        document.querySelector("#og-lang").classList.toggle("active");
+    } else {
+        document.querySelector("#lang-selector-container").classList.add("active");
+        document.querySelector("#og-lang").classList.add("active");
+    }
     lang_current = og;
-    document.querySelector("#og-lang").classList.add("active");
     document.querySelector("#tr-lang").classList.remove("active");
-    document.querySelector("#lang-selector-container").classList.add("active");
 
 }
 
 document.querySelector("#tr-lang").onclick = function(e) {
+    if (lang_current.name == "to") {
+        document.querySelector("#lang-selector-container").classList.toggle("active");
+        document.querySelector("#tr-lang").classList.toggle("active");
+    } else {
+        document.querySelector("#lang-selector-container").classList.add("active");
+        document.querySelector("#tr-lang").classList.add("active");
+    }
     lang_current = tr;
-    document.querySelector("#tr-lang").classList.add("active");
     document.querySelector("#og-lang").classList.remove("active");
-    document.querySelector("#lang-selector-container").classList.add("active");
 }
 
 // Handle language changes: buttons...
