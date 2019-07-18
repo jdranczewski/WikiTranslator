@@ -108,6 +108,15 @@ a {
 
 .search-result {
     padding: 5px;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background-color: #e8e8e8;
+}
+
+.search-result.active {
+    background-color: #dedede;
 }
 
 .lang-name {
@@ -131,7 +140,7 @@ a {
 .hatnotes {
     clear: both;
     font-size: 0.85em;
-    color: #3b3b3b;
+    color: #6c6c6c;
     text-align: justify;
 }
 
