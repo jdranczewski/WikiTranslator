@@ -199,6 +199,7 @@ class Article {
             if (!found) {
                 this.resetParams();
                 this.title = "No translation";
+                this.text = "<!--WTNoTranslation-->";
                 if (this.onTextReady !== undefined) this.onTextReady(this);
             }
         }
@@ -217,7 +218,7 @@ class Search {
             this.xhr.abort();
         }
         this.xhr = new XMLHttpRequest();
-        xhr_queue.push(xhr);
+        xhr_queue.push(this.xhr);
         var url = "https://";
         url += og.lang;
         url += ".wikipedia.org/w/api.php?";
@@ -402,6 +403,10 @@ function invert() {
     og = tr;
     tr = temp;
     assignArticleBase();
+    if (og.text == "<!--WTNoTranslation-->") {
+        og.resetParams();
+        document.querySelector("#tr-title").innerText = "";
+    }
     window.location.hash = "from=" + og.lang +
                            "&to=" + tr.lang +
                            "&title=" + document.querySelector("#tr-title").innerText;
