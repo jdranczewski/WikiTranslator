@@ -10,18 +10,6 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div id="lang-selector-container">
-            <h2>Recently used languages</h2>
-            <div id="recent-lang-buttons">
-            </div>
-            <h2>Most popular languages</h2>
-            <div id="popular-lang-buttons">
-            </div>
-            <h2>All available languages</h2>
-            <select id="lang-selector-dropdown">
-                <option value="">Loading...</option>
-            </select>
-        </div>
         <div id="og-tr-container">
             <img id="invert" src="img/switch.svg" onerror="this.src='img/switch.png'; this.onerror=null;" alt="Invert">
             <div id="og" class="pane">
@@ -44,6 +32,18 @@
                         <div id="tr-lang-number" class="lang-number"></div>
                     </div>
                     <div id="tr-title" class="title"></div>
+                </div>
+                <div id="lang-selector-container">
+                    <h2>Recently used languages</h2>
+                    <div id="recent-lang-buttons">
+                    </div>
+                    <h2>Most popular languages</h2>
+                    <div id="popular-lang-buttons">
+                    </div>
+                    <h2>All available languages</h2>
+                    <select id="lang-selector-dropdown">
+                        <option value="">Loading...</option>
+                    </select>
                 </div>
                 <div id="tr-hatnotes" class="hatnotes"></div>
                 <div id="tr-text" class="text"></div>

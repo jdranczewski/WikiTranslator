@@ -23,7 +23,7 @@ a {
     background-color: #dedede;
     cursor: pointer;
     transition: box-shadow 0.5s;
-    z-index: 4;
+    z-index: 5;
 }
 
 #invert:hover {
@@ -36,7 +36,51 @@ a {
 }
 
 #lang-selector-container {
-    display: none;
+    opacity: 0;
+    position: absolute;
+    background-color: #fcfcfc;
+    width: 100%;
+    margin-left: -50%;
+    margin-top: -2em;
+    padding: 15px;
+    box-shadow: 0 1px 6px #b8b8b8;
+    z-index: 3;
+    transition: margin-top 0.5s, opacity 0.5s;
+}
+
+#lang-selector-container:active {
+    display: block;
+    opacity: 1;
+    margin-top: -5px;
+}
+
+#lang-selector-container h2 {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.lang-button {
+    width: 50%;
+    display: inline-block;
+    padding: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #e5e5e5;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.lang-button:hover {
+    background-color: #c5c5c5;
+}
+
+.lang-button .lang-button-number {
+    font-size: 0.8em;
+    color: #787878;
+}
+
+#lang-selector-container select {
+    width: 100%;
 }
 
 #og-tr-container {
@@ -51,7 +95,6 @@ a {
     flex: 1;
     box-sizing: border-box;
     position: relative;
-    z-index: 1;
 }
 
 #tr {
@@ -62,7 +105,7 @@ a {
     position: relative;
     padding: 15px;
     border-bottom: 1px solid #c1c1c1;
-    z-index: 3;
+    z-index: 4;
 }
 
 #og-title-container {
