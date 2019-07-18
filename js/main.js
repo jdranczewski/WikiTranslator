@@ -22,7 +22,11 @@ class Article {
         this.section = undefined;
         this.hatnotes = [];
         this.langlinks = undefined;
-        this.text = "";
+        if (this.name == "from") {
+            this.text = "<p>Welcome to the WikiTranslator!</p> <p>You can select languages above, and then input your query in the inupt field. A matching article in the second language will be found and displayed to the right. You can then verify the translation is correct by comparing the summaries.</p>";
+        } else {
+            this.text = "";
+        }
         this.url = undefined;
     }
 
