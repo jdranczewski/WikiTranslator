@@ -201,15 +201,15 @@ a {
 
 .lang::after {
     content: "";
-    opacity: 0;
+    opacity: .3;
     position: absolute;
     bottom: 0.4em;
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 8px 5px 0 5px;
-    border-color: #007bff transparent transparent transparent;
-    transition: opacity 0.5s;
+    border-color: #000000 transparent transparent transparent;
+    transition: opacity 0.5s, border-color 0.5s;
 }
 
 .lang.active {
@@ -218,6 +218,7 @@ a {
 
 .lang.active::after {
     opacity: 1;
+    border-color: #007bff transparent transparent transparent;
 }
 
 .hatnotes {
