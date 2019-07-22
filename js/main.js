@@ -517,6 +517,12 @@ document.querySelector("#tr-lang").onclick = function(e) {
     document.querySelector("#og-lang").classList.remove("active");
 }
 
+document.querySelector("#lsc-close").onclick = function() {
+    document.querySelector("#og-lang").classList.remove("active");
+    document.querySelector("#tr-lang").classList.remove("active");
+    document.querySelector("#lang-selector-container").classList.remove("active");
+}
+
 // Handle language changes: buttons...
 function langButtonAssign() {
     document.querySelectorAll(".lang-button").forEach(function(lb) {

@@ -1,4 +1,5 @@
 body {
+    margin: 0;
     font-family: 'Roboto', sans-serif;
     color: #313131;
     line-height: 1.2;
@@ -45,6 +46,7 @@ a {
     margin-left: -50%;
     margin-top: -1em;
     padding: 15px;
+    box-sizing: border-box;
     box-shadow: 0 1px 6px #007bff6e;
     z-index: 3;
     transition: margin-top 0.5s, opacity 0.5s;
@@ -60,6 +62,17 @@ a {
 #lang-selector-container h2 {
     margin: 5px 0;
     text-align: center;
+}
+
+#lsc-close {
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #727272;
+    cursor: pointer;
 }
 
 .lang-button {
@@ -88,6 +101,7 @@ a {
 
 #og-tr-container {
     max-width: 1290px;
+    width: 98%;
     margin: 0 auto;
     display: flex;
     box-shadow: 0 1px 3px #b8b8b8;
@@ -257,4 +271,54 @@ a {
 
 #gt a {
     color: #4893ff;
+}
+
+@media only screen and (max-width: 700px) {
+    #og-tr-container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #invert {
+        position: relative;
+        margin-top: 0;
+        margin-bottom: -25px;
+    }
+
+    .pane {
+        position: initial;
+    }
+
+    #og-lang {
+        margin: 0 0 0 25px;
+        text-align: left;
+    }
+
+    #og-lang::after {
+        right: 5px;
+        left: auto;
+    }
+
+    #tr-title-container {
+        flex-direction: row-reverse;
+        padding-top: 25px;
+    }
+
+    #tr-title {
+        text-align: left;
+    }
+
+    #lang-selector-container {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-left: 0;
+        z-index: 5;
+        overflow-y: scroll;
+    }
+
+    #lsc-close {
+        display: block;
+    }
 }
