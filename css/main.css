@@ -9,9 +9,17 @@ a {
     color: #039BE5;
 }
 
+#top {
+    background-color: #eeeeee;
+    height: 250px;
+    padding: 5px;
+    margin-bottom: -120px;
+}
+
 #logo {
     display: block;
-    margin: 15px auto;
+    margin: 0 auto;
+    width: 470px;
 }
 
 #invert {
@@ -117,6 +125,10 @@ a {
     flex: 1;
     box-sizing: border-box;
     position: relative;
+}
+
+#og {
+    background-color: white;
 }
 
 #tr {
@@ -280,6 +292,15 @@ a {
 }
 
 @media only screen and (max-width: 700px) {
+    #top {
+        height: auto;
+        margin-bottom: 0;
+    }
+
+    #logo {
+        width: 100%;
+    }
+
     #og-tr-container {
         flex-direction: column;
         width: 100%;
@@ -315,6 +336,7 @@ a {
     }
 
     #lang-selector-container {
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
