@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="top">
-            <img src="img/wt_h.svg" id="logo">
+            <img src="img/wt_h.svg" id="logo" alt="WikiTranslator logo" onerror="this.src='img/wt_h.png'; this.onerror=null;">
         </div>
         <div id="og-tr-container">
             <div id="og" class="pane">
@@ -56,6 +56,33 @@
         </div>
         <div id="gt">
             Would you like a second opinion? <a target="_blank" title="Not all languages may be available">Try the same query on Google Translate</a>.
+        </div>
+        <div id="about">
+            <h1>WikiTranslator is a Wikpedia-based translation engine<br>for professional terms and vocabulary.</h1>
+            <h2>It does work for non-professional things too, of course!</h2>
+            <div id="pros">
+                <div class="pro">
+                    <img src="img/people.svg" onerror="this.src='img/people.png'; this.onerror=null;">
+                    <h3>Human curated</h3>
+                    <p>
+                        Millions of Wikipedia articles in different languages are linked together by volunteers to provide the ability to switch between them. This page uses Wikipedia's <a href="https://en.wikipedia.org/wiki/Application_programming_interface" title="Application programming interface" target="_blank">APIs</a> to let you use these links like a more classic translator product.
+                    </p>
+                </div>
+                <div class="pro">
+                    <img src="img/science.svg" onerror="this.src='img/science.png'; this.onerror=null;">
+                    <h3>Accurate and specialised</h3>
+                    <p>
+                        Do you need to know the proper term for <a href="#from=en&to=de&title=Corpuscular theory of light" title="Translate!">corpuscular theory of light</a> in German? Or how would a French biologist refer to <a href="#from=en&to=fr&title=Cytokinesis" title="Translate!">cytokinesis</a>? WikiTranslator can provide correct translations for complicated terminology and allows you to quickly verify that the terms match by providing a summary of both articles.
+                    </p>
+                </div>
+                <div class="pro">
+                    <img src="img/fast.svg" onerror="this.src='img/fast.png'; this.onerror=null;">
+                    <h3>Fast and small</h3>
+                    <p>
+                        By only downloading the necessary data and no pictures, WikiTranslator can reduce the bandwith you use for browsing Wikipedia entries, enabling quality translations even when access to Internet may be scarce.
+                    </p>
+                </div>
+            </div>
         </div>
         <script src="js/main.js"></script>
     </body>
