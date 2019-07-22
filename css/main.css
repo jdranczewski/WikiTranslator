@@ -6,7 +6,12 @@ body {
 }
 
 a {
-    color: #0069ff;
+    color: #039BE5;
+}
+
+#logo {
+    display: block;
+    margin: 15px auto;
 }
 
 #invert {
@@ -133,6 +138,7 @@ a {
 #tr-title-container {
     background-color: whitesmoke;
     display: flex;
+    align-items: flex-start;
 }
 
 #og-title {
@@ -147,13 +153,13 @@ a {
 }
 
 #og-title:focus {
-    border-bottom: 3px solid #0069ff;
+    border-bottom: 3px solid #039BE5;
 }
 
 #tr-title {
     text-align: right;
     font-size: 2em;
-    color: #0069ff;
+    color: #039BE5;
     flex: 1;
 }
 
@@ -208,7 +214,7 @@ a {
 .lang {
     position: relative;
     cursor: pointer;
-    border-bottom: 2px solid #0069ff00;
+    border-bottom: 2px solid #039BE500;
     margin-bottom: -2px !important;
     transition: border-bottom 0.5s;
 }
@@ -227,7 +233,7 @@ a {
 }
 
 .lang.active {
-    border-bottom: 2px solid #0069ff;
+    border-bottom: 2px solid #039BE5;
 }
 
 .lang.active::after {
