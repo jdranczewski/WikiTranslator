@@ -296,6 +296,7 @@ function setRecent(lang) {
 var og_el = document.querySelector('#og');
 function update_og_title(a) {
     og_el.querySelector(".title").value = a.title;
+    document.title = "WikiTranslator - " + a.title.split("_").join(" ");
     tr.findTranslation(og);
 }
 
@@ -405,6 +406,7 @@ function hashChanged() {
         document.querySelector("#og-title").value = title;
     } else {
         document.querySelector("#og-title").value = "";
+        document.title = "WikiTranslator";
     }
     stop_all_ajax();
     translate();
