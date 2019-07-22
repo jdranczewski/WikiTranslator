@@ -294,7 +294,7 @@ a {
 #about {
     width: 100%;
     max-width: 1290px;
-    padding: 15px;
+    padding: 60px 15px;
     padding-top: 25px;
     margin: 0 auto;
     box-sizing: border-box;
@@ -330,6 +330,39 @@ a {
 .pro img {
     display: block;
     margin: 0 auto;
+}
+
+#donate {
+    background-color: #676767;
+    padding: 15px;
+    color: white;
+    text-align: justify;
+}
+
+#donate div {
+    max-width: 1290px;
+    margin: 0 auto;
+}
+
+#donate a {
+    color: #c3c3c3;
+}
+
+#footer {
+    background-color: #3e3e3e;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+#footer div {
+    max-width: 1290px;
+    margin: 0 auto;
+}
+
+#footer a {
+    color: white;
 }
 
 @media only screen and (max-width: 700px) {
