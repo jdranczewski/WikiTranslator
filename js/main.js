@@ -324,6 +324,7 @@ function update_og(a) {
         og_el.querySelector(".article-link").href = a.url;
         og_el.querySelector(".article-link").classList.remove("disabled");
     }
+    document.querySelector("#lang-selector-container").style.pointerEvents = "";
 }
 
 function update_og_lang(a) {
@@ -369,6 +370,7 @@ function update_tr_lang(a) {
 // Reset the displayed data
 function reset() {
     document.querySelector("#gt").style.display = "none";
+    document.querySelector("#lang-selector-container").style.pointerEvents = "none";
     og_el.querySelector(".hatnotes").innerHTML = "";
     og_el.querySelector(".text").innerHTML = "<p>Loading...</p>";
     og_el.querySelector(".article-link").href = "";
