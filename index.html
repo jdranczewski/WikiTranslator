@@ -108,5 +108,13 @@
             This website uses cookies to store recently used languages. You can turn off cookies in your browser. Basic visit analytics are used, but no personally identifying information is collected. <a href="cookies.html" target="_blank">Learn more</a>
         </div>
         <script src="js/main.js"></script>
+        <script type="text/javascript">
+        if ("serviceWorker" in navigator && !navigator.serviceWorker.controller) {
+            // Register the service worker
+            navigator.serviceWorker.register("js/pwa-sw.js", {
+                scope: "./"
+            });
+        }
+        </script>
     </body>
 </html>
