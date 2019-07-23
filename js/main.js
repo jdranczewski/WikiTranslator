@@ -452,8 +452,10 @@ function assignArticleBase() {
 assignArticleBase();
 
 var cookies = getCookies();
+var slang = "none";
 if (cookies["from"] !== undefined) {
     og.setLang(cookies["from"]);
+    slang = cookies["from"];
 } else {
     og.setLang("en");
 }
@@ -612,3 +614,11 @@ document.querySelector("#og-title").oninput = function(e) {
 window.setTimeout(function() {
     document.querySelector("#lang-selector-container").style.display = "block";
 }, 500);
+
+// Simple analytics: sends only a hit and a referrer domain (not the full
+// address). Zero PII.
+var xs = new XMLHttpRequest();
+xs.open("POST", "https://jdranczewski.cba.pl/SimpleWebStats.php", true);
+xs.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+var referrer = document.referrer.split("/")[2];
+xs.send("visit&lang="+slang+"&referrer="+referrer);
