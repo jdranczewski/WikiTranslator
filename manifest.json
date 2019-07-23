@@ -1,0 +1,30 @@
+{
+    "dir" : "ltr",
+    "lang" : "en",
+    "name" : "WikiTranslator",
+    "scope" : "/",
+    "display" : "standalone",
+    "start_url" : "https://wikitranslator.github.io/",
+    "short_name" : "WikiTranslator",
+    "theme_color" : "transparent",
+    "description" : "WikiTranslator is a Wikipedia-based translation engine for professional terms and vocabulary.",
+    "orientation" : "any",
+    "background_color" : "transparent",
+    "related_applications" : "",
+    "prefer_related_applications" : "false",
+    "generated" : "true",
+    "icons" : [
+        {
+            "src": "https://wikitranslator.github.io/favicon.ico",
+            "sizes": "16x16"
+        },
+        {
+            "src": "https://wikitranslator.github.io/img/icon-192.png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://wikitranslator.github.io/img/icon-512.png",
+            "sizes": "512x512"
+        }
+    ]
+}
