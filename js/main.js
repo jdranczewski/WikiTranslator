@@ -335,6 +335,7 @@ function update_og_lang(a) {
     var lang = all_langs[a.langId];
     og_el.querySelector(".lang-name").innerText = lang[1] + " (" + lang[2] + ")";
     og_el.querySelector(".lang-number").innerText = lang[3];
+    og_el.querySelector(".text").lang = lang[0];
 }
 
 // Update the displayed data based on parameters of the translated article
@@ -369,6 +370,7 @@ function update_tr_lang(a) {
     var lang = all_langs[a.langId];
     tr_el.querySelector(".lang-name").innerText = lang[1] + " (" + lang[2] + ")";
     tr_el.querySelector(".lang-number").innerText = lang[3];
+    tr_el.querySelector(".text").lang = lang[0];
 }
 
 // Reset the displayed data
