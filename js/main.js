@@ -621,4 +621,5 @@ var xs = new XMLHttpRequest();
 xs.open("POST", "https://jdranczewski.cba.pl/SimpleWebStats.php", true);
 xs.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 var referrer = document.referrer.split("/")[2];
-xs.send("visit&lang="+slang+"&referrer="+referrer);
+var mobile = (window.innerWidth <= 700);
+xs.send("visit&lang="+slang+"&mobile="+mobile+"&referrer="+referrer);
