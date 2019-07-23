@@ -365,6 +365,29 @@ a {
     color: white;
 }
 
+#cookies {
+    display: none;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 40%;
+    box-sizing: border-box;
+    padding: 15px;
+    text-align: justify;
+    background-color: #dedede;
+    box-shadow: 0 1px 3px #b8b8b8;
+}
+
+#cok {
+    background-color: #039BE5;
+    float: right;
+    padding: 10px;
+    margin-left: 15px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 700px) {
     #top {
         height: auto;
@@ -426,5 +449,10 @@ a {
 
     #pros {
         flex-direction: column;
+    }
+
+    #cookies {
+        width: 85%;
+        opacity: 0.9;
     }
 }

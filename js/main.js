@@ -484,15 +484,17 @@ document.querySelector("#lang-selector-dropdown").innerHTML = selector_html;
 
 // Populate the language buttons
 function displayRecent() {
-    var recents = getCookies()["recent"].split("&");
-    var recent_buttons_html = "";
-    for (var i=0; i<recents.length; i++) {
-        var index = all_langs_short.indexOf(recents[i]);
-        var lang = all_langs[index];
-        recent_buttons_html += "<div class=\"lang-button\" id=\"lbp-"+index+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+" articles</div></div>";
+    if (getCookies()["recent"] !== undefined) {
+        var recents = getCookies()["recent"].split("&");
+        var recent_buttons_html = "";
+        for (var i=0; i<recents.length; i++) {
+            var index = all_langs_short.indexOf(recents[i]);
+            var lang = all_langs[index];
+            recent_buttons_html += "<div class=\"lang-button\" id=\"lbp-"+index+"\"><div class=\"lang-button-name\">"+lang[1]+" ("+lang[2]+")</div><div class=\"lang-button-number\">"+lang[3]+" articles</div></div>";
+        }
+        document.querySelector("#recent-lang-buttons").innerHTML = recent_buttons_html;
+        langButtonAssign();
     }
-    document.querySelector("#recent-lang-buttons").innerHTML = recent_buttons_html;
-    langButtonAssign();
 }
 var pop_buttons_html = "";
 var pop = [45, 52, 38,224,46, 76, 138, 297, 293, 139];
@@ -615,11 +617,27 @@ window.setTimeout(function() {
     document.querySelector("#lang-selector-container").style.display = "block";
 }, 500);
 
+// Cookie notice
+if (getCookies()["ok"] === undefined) {
+    document.querySelector("#cookies").style.display = "block";
+}
+
+document.querySelector("#cok").onclick = function() {
+    document.querySelector("#cookies").style.display = "";
+    setCookie("ok", "yes");
+}
+
 // Simple analytics: sends only a hit and a referrer domain (not the full
 // address). Zero PII.
 var xs = new XMLHttpRequest();
 xs.open("POST", "https://jdranczewski.cba.pl/SimpleWebStats.php", true);
 xs.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+var d = new Date();
+var now = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
 var referrer = document.referrer.split("/")[2];
 var mobile = (window.innerWidth <= 700);
-xs.send("visit&lang="+slang+"&mobile="+mobile+"&referrer="+referrer);
+xs.send("visit&lang="+encodeURIComponent(slang)
++"&usertime="+encodeURIComponent(now)
++"&mobile="+encodeURIComponent(mobile)
++"&referrer="+encodeURIComponent(referrer)
+);
