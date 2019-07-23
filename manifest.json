@@ -9,7 +9,7 @@
     "theme_color" : "transparent",
     "description" : "WikiTranslator is a Wikipedia-based translation engine for professional terms and vocabulary.",
     "orientation" : "any",
-    "background_color" : "transparent",
+    "background_color" : "#d5d5d5",
     "related_applications" : "",
     "prefer_related_applications" : "false",
     "generated" : "true",
