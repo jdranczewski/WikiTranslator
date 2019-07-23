@@ -296,7 +296,11 @@ function setRecent(lang) {
 var og_el = document.querySelector('#og');
 function update_og_title(a) {
     og_el.querySelector(".title").value = a.title;
-    document.title = "WikiTranslator - " + a.title.split("_").join(" ");
+    if (a.title == "") {
+        document.title = "WikiTranslator";
+    } else {
+        document.title = "WikiTranslator - " + a.title.split("_").join(" ");
+    }
     tr.findTranslation(og);
 }
 
@@ -425,6 +429,7 @@ function invert() {
         og.resetParams();
         document.querySelector("#tr-title").innerText = "";
     }
+    if (og.title == "") og.resetParams();
     window.location.hash = "from=" + og.lang +
                            "&to=" + tr.lang +
                            "&title=" + document.querySelector("#tr-title").innerText;
