@@ -614,6 +614,8 @@ document.querySelector("#og-title").oninput = function(e) {
     search.query(e.target.value);
 }
 
+document.querySelector("#og-title").focus();
+
 // Stop lang selector from appearing onload as it animates into opacity 0
 window.setTimeout(function() {
     document.querySelector("#lang-selector-container").style.display = "block";
@@ -638,8 +640,10 @@ var d = new Date();
 var now = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
 var referrer = document.referrer.split("/")[2];
 var mobile = (window.innerWidth <= 700);
-xs.send("visit&lang="+encodeURIComponent(slang)
-+"&usertime="+encodeURIComponent(now)
-+"&mobile="+encodeURIComponent(mobile)
-+"&referrer="+encodeURIComponent(referrer)
-);
+if (document.location.origin == "https://jdranczewski.github.io") {
+    xs.send("visit&lang="+encodeURIComponent(slang)
+    +"&usertime="+encodeURIComponent(now)
+    +"&mobile="+encodeURIComponent(mobile)
+    +"&referrer="+encodeURIComponent(referrer)
+    );
+}
