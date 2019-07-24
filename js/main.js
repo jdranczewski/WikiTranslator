@@ -248,9 +248,11 @@ class Search {
         console.log(data);
 
         this.results = [];
-        var results = data["query"]["prefixsearch"];
-        for (var i=0; i<results.length; i++) {
-            this.results.push(results[i]["title"]);
+        if (data["query"] !== undefined) {
+            var results = data["query"]["prefixsearch"];
+            for (var i=0; i<results.length; i++) {
+                this.results.push(results[i]["title"]);
+            }
         }
         if (this.onResultsReady !== undefined) this.onResultsReady(this);
     }
@@ -579,7 +581,7 @@ function update_search(s) {
         sr.onmousedown = search_click;
         cont.appendChild(sr);
     }
-    cont.firstChild.classList.add("active");
+    if (cont.firstChild !== null) cont.firstChild.classList.add("active");
 }
 
 function search_click(e) {
