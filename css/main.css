@@ -374,8 +374,10 @@ a {
     box-sizing: border-box;
     padding: 15px;
     text-align: justify;
+    font-size: 0.8em;
     background-color: #dedede;
     box-shadow: 0 1px 3px #b8b8b8;
+    z-index: 5;
 }
 
 #cok {
