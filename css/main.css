@@ -430,6 +430,7 @@ a {
 
     #tr-title {
         text-align: left;
+        overflow-x: scroll;
     }
 
     #lang-selector-container {
