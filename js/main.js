@@ -642,7 +642,7 @@ var d = new Date();
 var now = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
 var referrer = document.referrer.split("/")[2];
 var mobile = (window.innerWidth <= 700);
-if (document.location.origin == "https://jdranczewski.github.io") {
+if (document.location.origin == "https://wikitranslator.github.io") {
     xs.send("visit&lang="+encodeURIComponent(slang)
     +"&usertime="+encodeURIComponent(now)
     +"&mobile="+encodeURIComponent(mobile)
