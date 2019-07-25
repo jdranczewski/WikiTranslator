@@ -457,6 +457,7 @@ assignArticleBase();
 
 var cookies = getCookies();
 var slang = "none";
+var userlang = (navigator.language || navigator.userLanguage).split("-")[0];
 if (cookies["from"] !== undefined) {
     og.setLang(cookies["from"]);
     slang = cookies["from"];
@@ -465,6 +466,8 @@ if (cookies["from"] !== undefined) {
 }
 if (cookies["to"] !== undefined) {
     tr.setLang(cookies["to"]);
+} else if (userlang !== "undefined" || userlang !== "en") {
+    tr.setLang(userlang);
 } else {
     tr.setLang("pl");
 }
