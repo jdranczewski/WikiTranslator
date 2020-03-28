@@ -64,20 +64,26 @@ class Article {
         }
         this.title = title;
         this.section = title.split("#")[1];
-        this.url = "https://" + this.lang + ".wikipedia.org/wiki/" + title
+
         var xhr = new XMLHttpRequest();
         xhr_queue.push(xhr);
         var url = "https://";
         url += this.lang;
-        url += ".wikipedia.org/api/rest_v1/page/metadata/";
-        url += title;
+        url += ".wikipedia.org/w/api.php?";
+        url += "origin=*&";
+        url += "action=query&";
+        url += "format=json&";
+        url += "prop=langlinks&";
+        url += "redirects=1&";
+        url += "lllimit=max&"
+        url += "titles=" + this.title;
         xhr.open("GET", url, true);
         // 'this' changes meaning inside a function()
         var this_class = this;
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                this_class.parseMetadata(this.responseText);
-                this_class.getText();
+              this_class.parseMetadata(this.responseText);
+              this_class.getText();
             }
         }
         xhr.setRequestHeader("Api-User-Agent", user_agent);
@@ -91,6 +97,8 @@ class Article {
         debug = data;
         console.log(data);
 
+        data = data.query.pages[Object.keys(data.query.pages)]
+
         // Set article details and fire callback once done
         this.hatnotes = []
         if (data["hatnotes"] !== undefined) {
@@ -100,8 +108,8 @@ class Article {
                 }
             }
         };
-        if (data["language_links"] !== undefined) {
-            this.langlinks = data["language_links"];
+        if (data["langlinks"] !== undefined) {
+            this.langlinks = data["langlinks"];
         } else {
             this.langlinks = [];
         }
@@ -192,7 +200,7 @@ class Article {
             var found = false;
             for (var i=0; i<a.langlinks.length; i++) {
                 if (a.langlinks[i].lang == this.lang) {
-                    this.setTitle(a.langlinks[i]["titles"]["canonical"]);
+                    this.setTitle(a.langlinks[i]["*"]);
                     found = true;
                     break;
                 }
