@@ -64,6 +64,7 @@ class Article {
         }
         this.title = title;
         this.section = title.split("#")[1];
+        this.url = "https://" + this.lang + ".wikipedia.org/wiki/" + title
 
         var xhr = new XMLHttpRequest();
         xhr_queue.push(xhr);
