@@ -474,7 +474,7 @@ if (cookies["from"] !== undefined) {
 }
 if (cookies["to"] !== undefined) {
     tr.setLang(cookies["to"]);
-} else if (userlang !== "undefined" || userlang !== "en") {
+} else if (userlang !== "undefined" && userlang !== "en") {
     tr.setLang(userlang);
 } else {
     tr.setLang("pl");
