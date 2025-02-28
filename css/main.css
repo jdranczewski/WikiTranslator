@@ -168,6 +168,10 @@ a {
     border-bottom: 3px solid #039BE5;
 }
 
+#og-title::placeholder {
+    color: #919191;
+}
+
 #tr-title {
     text-align: right;
     font-size: 2em;
