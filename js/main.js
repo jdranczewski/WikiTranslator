@@ -635,16 +635,6 @@ window.setTimeout(function() {
     document.querySelector("#lang-selector-container").style.display = "block";
 }, 500);
 
-// Cookie notice
-if (getCookies()["ok"] === undefined) {
-    document.querySelector("#cookies").style.display = "block";
-}
-
-document.querySelector("#cok").onclick = function() {
-    document.querySelector("#cookies").style.display = "";
-    setCookie("ok", "yes");
-}
-
 // Simple analytics: sends only a hit and a referrer domain (not the full
 // address). Zero PII.
 var xs = new XMLHttpRequest();
