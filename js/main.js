@@ -642,10 +642,11 @@ window.setTimeout(function() {
 // "popular" language list more acurately in the future, or make it easier
 // to browse the language list if obscure languages are used often.
 function umami_languages() {
-    if (cookies["from"] !== undefined & cookies["from"] !== undefined) {
+    if (cookies["from"] !== undefined & cookies["to"] !== undefined) {
         // Only note this on second visit, once the user has adjusted the languages.
         var payload = {};
         payload["language"] = cookies["from"] + ":" + cookies["to"]
+        payload["host"] = window.location.host
         umami.identify(payload)
     }
 }
