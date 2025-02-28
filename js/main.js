@@ -635,19 +635,23 @@ window.setTimeout(function() {
     document.querySelector("#lang-selector-container").style.display = "block";
 }, 500);
 
-// Simple analytics: sends only a hit and a referrer domain (not the full
-// address). Zero PII.
-var xs = new XMLHttpRequest();
-xs.open("POST", "https://jdranczewski.cba.pl/SimpleWebStats.php", true);
-xs.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-var d = new Date();
-var now = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-var referrer = document.referrer.split("/")[2];
-var mobile = (window.innerWidth <= 700);
-if (document.location.origin == "https://wikitranslator.github.io") {
-    xs.send("visit&lang="+encodeURIComponent(slang)
-    +"&usertime="+encodeURIComponent(now)
-    +"&mobile="+encodeURIComponent(mobile)
-    +"&referrer="+encodeURIComponent(referrer)
-    );
+
+// Make note of what languages the user has selected.
+// This is part of the Umami anonymous website statistics package I'm using.
+// I would like to know what languages people use, so that I can set the
+// "popular" language list more acurately in the future, or make it easier
+// to browse the language list if obscure languages are used often.
+function umami_languages() {
+    if (cookies["from"] !== undefined & cookies["from"] !== undefined) {
+        // Only note this on second visit, once the user has adjusted the languages.
+        umami.track(
+            "languages",
+            {
+                "from": cookies["from"],
+                "to": cookies["to"]
+            }
+        )
+    }
 }
+// Umami script is loaded with "defer", so we need to wait for load to complete
+window.onload = umami_languages
