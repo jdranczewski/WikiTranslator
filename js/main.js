@@ -644,13 +644,9 @@ window.setTimeout(function() {
 function umami_languages() {
     if (cookies["from"] !== undefined & cookies["from"] !== undefined) {
         // Only note this on second visit, once the user has adjusted the languages.
-        umami.track(
-            "languages",
-            {
-                "from": cookies["from"],
-                "to": cookies["to"]
-            }
-        )
+        var payload = {};
+        payload["language"] = cookies["from"] + ":" + cookies["to"]
+        umami.identify(payload)
     }
 }
 // Umami script is loaded with "defer", so we need to wait for load to complete
