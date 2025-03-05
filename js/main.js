@@ -643,8 +643,7 @@ window.setTimeout(function() {
 // to browse the language list if obscure languages are used often.
 function umami_languages() {
     var payload = {};
-    payload["language"] = cookies["from"] + ":" + cookies["to"]
-    payload["host"] = window.location.host
+    payload["language"] = og.lang + ":" + tr.lang
     umami.identify(payload)
 }
 // Umami script is loaded with "defer", so we need to wait for load to complete
